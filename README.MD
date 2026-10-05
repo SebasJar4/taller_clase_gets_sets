@@ -1,0 +1,1 @@
+Este proyecto esta compilandose en entorno linux dado que mingw no me trae las libs std poxi. requiere de regexp.h que no la encontre en mingw. Por ende sigo en linux.
