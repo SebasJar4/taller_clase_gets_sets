@@ -1,1 +1,19 @@
-Este proyecto esta compilandose en entorno linux dado que mingw no me trae las libs std poxi. requiere de regexp.h que no la encontre en mingw. Por ende sigo en linux.
+# Protecto
+Actividad en clase la cual tendremos que crear una pequeña db almacenada solo en ram la cual tendra los datos de estudiantes definidos en data_structs.hÑ
+
+```c
+#define CODE_SIZE 10
+#define NAME_SIZE 12
+#define LAST_NAME_SIZE 12
+#define CARRER_SIZE 15
+#define FACULTY_SIZE 20
+
+typedef struct { // el mas 1 es para el '\0'
+  char *code;
+  char *name;
+  char *last_name;
+  char *carrer;
+  int sem;
+  char *faculty; 
+} Student;
+``` 
