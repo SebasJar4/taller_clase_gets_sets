@@ -1,0 +1,7 @@
+ejecutar antes en powershell para poder activar los scripts
+
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+o
+
+powershell -ExecutionPolicy Bypass -File .\compilar.ps1

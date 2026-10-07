@@ -1,5 +1,5 @@
 #include"gets_sets_student.h"
-#include"../generals/input_string.h"
+#include"generals/input_string.h"
 #include<stdio.h>
 #include<stdlib.h>
 #include<stdbool.h>
