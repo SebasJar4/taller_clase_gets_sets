@@ -7,7 +7,7 @@
 
 bool valid_characters_for_ignorin_initial_spaces ( int c ) {
   char invalid_char[] = { ' ' , '\t' , '\0' };
-  for ( int i = 0 ; i < (sizeof( invalid_char ) / sizeof( invalid_char[0] )) ; i ++ ) 
+  for ( size_t i = 0 ; i < (sizeof( invalid_char ) / sizeof( invalid_char[0] )) ; i ++ ) 
     if ( c == invalid_char[ i ] ) return false;  
   return true;
 }
@@ -24,7 +24,7 @@ char * get_str_stdin () {
 
 
   // Leer caracteres uno a uno hasta encontrar '\n' o EOF
-  int index = 0;
+  size_t index = 0;
   while (true) {
     int current = getc(stdin); // Usamos int para detectar EOF correctamente
 
@@ -62,8 +62,8 @@ bool fill_array_of_stin ( char * arr , const size_t size_arr ) {
 
   char *tmp = get_str_stdin();
 
-  int index = 0;
-  for ( int i = 0 ; i < strlen( tmp ) ; i ++ ) {
+  size_t index = 0;
+  for ( size_t i = 0 ; i < strlen( tmp ) ; i ++ ) {
     arr[ index++ ] = tmp[ i ];
     if ( index >= size_arr ) break;
   }

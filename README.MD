@@ -1,19 +1,2 @@
-# Protecto
-Actividad en clase la cual tendremos que crear una pequeña db almacenada solo en ram la cual tendra los datos de estudiantes definidos en data_structs.hÑ
-
-```c
-#define CODE_SIZE 10
-#define NAME_SIZE 12
-#define LAST_NAME_SIZE 12
-#define CARRER_SIZE 15
-#define FACULTY_SIZE 20
-
-typedef struct { // el mas 1 es para el '\0'
-  char *code;
-  char *name;
-  char *last_name;
-  char *carrer;
-  int sem;
-  char *faculty; 
-} Student;
-``` 
+# De que trata
+Esta rama tratara de resolver el problema que tengo que el index se puede repetir ya que cuando se ingresan multiples usuarios en el array invocamos a set_all_of_student() y no verificamos si el codigo se repite o no, por ende podemos tener codigos duplicados
