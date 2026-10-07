@@ -1,9 +1,10 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include"specifics/gets_sets_student.h"
 #include<string.h>
 #include<stdbool.h>
 #include<assert.h>
+
+#include"specifics/gets_sets_student.h"
 
 #define NUMBER_ESTUDENTS 3
 

@@ -3,6 +3,7 @@
 #include<assert.h>
 #include<stdlib.h>
 #include<string.h>
+#include"generals/input_string.h"
 
 bool valid_characters_for_ignorin_initial_spaces ( int c ) {
   char invalid_char[] = { ' ' , '\t' , '\0' };

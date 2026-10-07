@@ -1,4 +1,4 @@
-#include "./sort.h"
+#include "generals/sort.h"
 #include <assert.h>
 
 void bubble_sort_int ( int * array , size_t size_array , sort_type type_sort ) {

@@ -5,7 +5,7 @@
 #include <stdarg.h>
 
 
-#include "input_functions.h"
+#include "generals/input_functions.h"
 
 // void print_input_exception( char * error ) {
 //   assert(error != NULL && strlen(error) > 0);

@@ -1,5 +1,5 @@
-#include "array.h"
-#include "input_functions.h"
+#include "generals/array.h"
+#include "generals/input_functions.h"
 
 void get_int_vector ( int * vector , size_t size ) {
   assert( ( vector != NULL || "Vector nulo" ) && ( size > 0 || "size invalido" ) );
