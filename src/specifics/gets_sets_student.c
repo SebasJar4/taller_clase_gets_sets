@@ -11,8 +11,8 @@ bool validate_data ( char * exp , char * str ) {
   int res = regcomp( &regex, exp , REG_EXTENDED );
 
   if (res != 0) {
-      printf("Error al compilar la regex.\n");
-      return 1;
+    fprintf( stderr , "Error al compilar la regex.\n" );
+    exit( 1 );
   }
 
   return regexec( &regex , str , 0 , NULL , 0 ) == 0;
