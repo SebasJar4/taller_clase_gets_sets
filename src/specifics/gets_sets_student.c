@@ -58,7 +58,7 @@ char * get_code() {
   return str;
 }
 
-char * get_name( ) {
+char * get_name() {
   char * tmp;
   char * str = malloc( NAME_SIZE );
   while ( true ) {
@@ -191,14 +191,14 @@ Student get_student() {
   return student;
 }
 
-bool set_code( Student * student );
-bool set_name( Student * student );
-bool set_last_name( Student * student );
-bool set_carrer( Student * student );
-bool set_semester( Student * student );
-bool set_faculty( Student * student );
+bool set_code ( Student * student );
+bool set_name ( Student * student );
+bool set_last_name ( Student * student );
+bool set_carrer ( Student * student );
+bool set_semester ( Student * student );
+bool set_faculty ( Student * student );
 
-bool set_all_of_student( Student * student ) {
+bool set_all_of_student ( Student * student ) {
   student->code = get_code();
   student->name = get_name();
   student->last_name = get_last_name();
@@ -208,7 +208,22 @@ bool set_all_of_student( Student * student ) {
   return true;
 }
 
-void print_student( Student * student ) {
+bool set_all_of_student_without_code ( Student * student ) {
+  student->name = get_name();
+  student->last_name = get_last_name();
+  student->carrer = get_carrer();
+  student->faculty = get_faculty();
+  student->sem = get_semester();
+  return true;
+}
+
+void print_student ( Student * student ) {
+  assert( student->code != NULL
+    && student->name != NULL
+    && student->last_name != NULL
+    && student->carrer != NULL
+    && student->faculty != NULL
+  );  
   printf(
     "Estudiante: \n - Codigo: %s \n - Nombre: %s \n - Apellido: %s \n - Carrera: %s \n - Facultad: %s \n - Semestre %d \n" 
     , student->code 

@@ -5,37 +5,62 @@
 #include<assert.h>
 
 #include"specifics/gets_sets_student.h"
+#include"specifics/data_structs.h"
 
 #define NUMBER_ESTUDENTS 3
 
 int get_option();
 bool are_the_same( char * str1 , size_t size1 , char * str2 , size_t size2 );
+char * get_unique_code ( const Student *list_estudents , size_t size );
 
 int main ( void ) {
   Student list_estudents[ NUMBER_ESTUDENTS ];
-  for ( int i = 0 ; i < NUMBER_ESTUDENTS ; i ++ ) {
-    printf("@@@Estudiante %d de %d" , i + 1 , NUMBER_ESTUDENTS );
+  for ( size_t i = 0 ; i < NUMBER_ESTUDENTS ; i ++ ) {
+    printf( "\n@@@ Vamos a ingresar los datos del estudiante %lu de %u" , (i + 1) , NUMBER_ESTUDENTS );
     press_enter_to_continue();
-    set_all_of_student( list_estudents + i );
+  
+    list_estudents[i].code = get_unique_code( list_estudents , i );
+    set_all_of_student_without_code( list_estudents + i );
+    printf("\n");
   }
 
-  // for ( size_t i = 0 ; i < NUMBER_ESTUDENTS ; i ++ ) print_student( list_estudents + i );
+  for ( size_t i = 0 ; i < NUMBER_ESTUDENTS ; i ++ ) print_student( list_estudents + i );
 
   int option;
   char *data;
-
+  
   while ( true ) {
-    if ( get_yes_or_not("salir?") ) break; 
+
+    if ( get_yes_or_not("\n Salir?") ) break; 
+    
     option = get_option();
     
-
-    if ( option == 1 ) data = get_code();
-    if ( option == 2 ) data = get_name();
-
-    for ( int i = 0 ; i < NUMBER_ESTUDENTS ; i ++ ) {
-      if ( option == 1 && are_the_same( data , strlen(data) , list_estudents[i].code , NAME_SIZE ) ) print_student( list_estudents + i );
-      if ( option == 2 && are_the_same( data , strlen(data) , list_estudents[i].name , NAME_SIZE )) print_student( list_estudents + i );
+    if ( option == 1 ) {
+      data = get_code();
+      for ( size_t i = 0 ; i < NUMBER_ESTUDENTS ; i ++ ) if ( are_the_same( data , strlen(data) , list_estudents[i].code , NAME_SIZE ) ) print_student( list_estudents + i );
+      continue;
+    } else if ( option == 2 ) { 
+      data = get_name();
+      for ( size_t i = 0 ; i < NUMBER_ESTUDENTS ; i ++ ) if ( are_the_same( data , strlen(data) , list_estudents[i].name , NAME_SIZE ) ) print_student( list_estudents + i );
+    } else if ( option == 3 ) { 
+      data = get_last_name();
+      for ( size_t i = 0 ; i < NUMBER_ESTUDENTS ; i ++ ) if ( are_the_same( data , strlen(data) , list_estudents[i].last_name , NAME_SIZE ) ) print_student( list_estudents + i ); 
+    } else if ( option == 4 ) { 
+      data = get_carrer();
+      for ( size_t i = 0 ; i < NUMBER_ESTUDENTS ; i ++ ) if ( are_the_same( data , strlen(data) , list_estudents[i].carrer , NAME_SIZE ) ) print_student( list_estudents + i ); 
+    } else if ( option == 5 ) { 
+      data = get_faculty();
+      for ( size_t i = 0 ; i < NUMBER_ESTUDENTS ; i ++ )
+        if ( are_the_same( data , strlen(data) , list_estudents[i].faculty , NAME_SIZE ) ) print_student( list_estudents + i ); 
+    } else if ( option == 6 ) {
+      int sem = get_semester();
+      for ( size_t i = 0 ; i < NUMBER_ESTUDENTS ; i ++ )
+        if ( list_estudents[ i ].sem == sem ) print_student( list_estudents + i );
+    } else if ( option == 7 ) {
+      for ( size_t i = 0 ; i < NUMBER_ESTUDENTS ; i ++ ) print_student( list_estudents + i );
+      continue;
     }
+
     free( data );
   }
 
@@ -47,9 +72,11 @@ int main ( void ) {
 int get_option() { 
   int input;
   while ( true ) {
-    printf("Seleccione una opcion: \n 1. Ver estudiante por codigo \n 2. Ver a estudiante por nombre\n" );
+    printf("Seleccione una opcion: \n 1. Ver estudiante por codigo \n 2. Ver a estudiante por nombre\n 3. Ver estudiante por Apellido\n 4. Ver estudiante por Carrera\n 5. Ver estudiante por Facultad\n 6. Ver estudiante por semestre\n 7. Ver todos los estudiante\n" );
+
     input = get_input_int("la opcion");
-    if ( input >= 1 && input <= 2 ) break;
+
+    if ( input >= 1 && input <= 7 ) break;
     print_input_exception("La entrada es invalida....");
   }
   return input;
@@ -72,4 +99,28 @@ bool are_the_same( char * str1 , size_t size1 , char * str2 , size_t size2 ) {
   }
 
   return true;
+}
+
+char * get_unique_code ( const Student *list_students , size_t size ) {
+
+  assert( list_students != NULL );
+
+  char * tmp_code;
+  bool already_exist = false;
+  
+  while ( true ) {
+    already_exist = false;
+    tmp_code = get_code();
+    for ( size_t i = 0 ; i < size ; i ++ ) {
+      if( are_the_same( list_students[ i ].code , CODE_SIZE , tmp_code , CODE_SIZE ) ) { 
+        already_exist = true;
+        free( tmp_code );
+        break;
+      }
+    }
+    if ( !already_exist ) break;
+    print_input_exception("El codigo de estudiante ingresado ya existe, por favor digite uno nuevo...");
+  }
+  
+  return tmp_code;
 }
