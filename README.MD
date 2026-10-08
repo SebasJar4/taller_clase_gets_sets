@@ -1,2 +1,2 @@
 # De que trata
-Esta rama tratara de resolver el problema que tengo que el index se puede repetir ya que cuando se ingresan multiples usuarios en el array invocamos a set_all_of_student() y no verificamos si el codigo se repite o no, por ende podemos tener codigos duplicados
+Proyecto de hacer una mini db en ram con c de estudiante...
