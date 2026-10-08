@@ -15,14 +15,14 @@
 
   Student get_student();
 
-  bool set_code( Student * student );
-  bool set_name( Student * student );
-  bool set_last_name( Student * student );
-  bool set_carrer( Student * student );
-  bool set_semester( Student * student );
-  bool set_faculty( Student * student );
-  bool set_all_of_student( Student * student );
-  bool set_all_of_student_without_code ( Student * student );
+  char * set_code( Student * student );
+  char * set_name( Student * student );
+  char * set_last_name( Student * student );
+  char * set_carrer( Student * student );
+  int set_semester( Student * student );
+  char * set_faculty( Student * student );
+  Student * set_all_of_student( Student * student );
+  Student * set_all_of_student_without_code ( Student * student );
 
   void print_student( Student * student );
 

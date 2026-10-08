@@ -1,5 +1,5 @@
 CC       := gcc
-CFLAGS   := -Wall -Wextra -std=c11 -g -Iinclude
+CFLAGS   := -Wall -Wextra -std=c17 -g -Iinclude
 LDFLAGS := -Lbuild/obj -lspecifics -lgenerals
 
 # Carpetas de salida

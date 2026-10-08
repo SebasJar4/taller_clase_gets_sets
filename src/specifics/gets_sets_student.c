@@ -191,30 +191,50 @@ Student get_student() {
   return student;
 }
 
-bool set_code ( Student * student );
-bool set_name ( Student * student );
-bool set_last_name ( Student * student );
-bool set_carrer ( Student * student );
-bool set_semester ( Student * student );
-bool set_faculty ( Student * student );
-
-bool set_all_of_student ( Student * student ) {
-  student->code = get_code();
-  student->name = get_name();
-  student->last_name = get_last_name();
-  student->carrer = get_carrer();
-  student->faculty = get_faculty();
-  student->sem = get_semester();
-  return true;
+char * set_code ( Student * student ) {
+  assert( student != NULL );
+  return ( student->code = get_code() );
 }
 
-bool set_all_of_student_without_code ( Student * student ) {
+char * set_name ( Student * student ) {
+  assert( student != NULL );
+  return ( student->name = get_name() );
+}
+
+char * set_last_name ( Student * student ) {
+  assert( student != NULL );
+  return ( student->last_name = get_last_name() );
+}
+
+char * set_carrer ( Student * student ) {
+  assert( student != NULL );
+  return ( student->carrer = get_carrer() );
+}
+
+int set_semester ( Student * student ) {
+  assert( student != NULL );
+  return ( student->sem = get_semester() );
+}
+
+char * set_faculty ( Student * student ) {
+  assert( student != NULL );
+  return (student->faculty = get_faculty() );
+}
+
+
+Student * set_all_of_student_without_code ( Student * student ) {
   student->name = get_name();
   student->last_name = get_last_name();
   student->carrer = get_carrer();
   student->faculty = get_faculty();
   student->sem = get_semester();
-  return true;
+  return student;
+}
+
+Student * set_all_of_student ( Student * student ) {
+  student->code = get_code();
+  set_all_of_student_without_code( student );
+  return student;
 }
 
 void print_student ( Student * student ) {
@@ -224,6 +244,7 @@ void print_student ( Student * student ) {
     && student->carrer != NULL
     && student->faculty != NULL
   );  
+
   printf(
     "Estudiante: \n - Codigo: %s \n - Nombre: %s \n - Apellido: %s \n - Carrera: %s \n - Facultad: %s \n - Semestre %d \n" 
     , student->code 

@@ -1,6 +1,5 @@
-#include"../lib/specifics/data_structs.h"
-#include"../lib/specifics/gets_sets_student.h"
-
+#include"specifics/data_structs.h"
+#include"specifics/gets_sets_student.h"
 #include<stdio.h>
 #include<stdlib.h>
 
