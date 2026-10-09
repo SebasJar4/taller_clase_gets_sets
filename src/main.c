@@ -11,20 +11,20 @@
 
 int get_option();
 bool are_the_same( char * str1 , size_t size1 , char * str2 , size_t size2 );
-char * get_unique_code ( const Student *list_estudents , size_t size );
+char * get_unique_code ( const Student *list_students , size_t size );
 
 int main ( void ) {
-  Student list_estudents[ NUMBER_ESTUDENTS ];
+  Student list_students[ NUMBER_ESTUDENTS ]; // heap stack
   for ( size_t i = 0 ; i < NUMBER_ESTUDENTS ; i ++ ) {
     printf( "\n@@@ Vamos a ingresar los datos del estudiante %lu de %u" , (i + 1) , NUMBER_ESTUDENTS );
     press_enter_to_continue();
   
-    list_estudents[i].code = get_unique_code( list_estudents , i );
-    set_all_of_student_without_code( list_estudents + i );
+    list_students[i].code = get_unique_code( list_students , i );
+    set_all_of_student_without_code( list_students + i );
     printf("\n");
   }
 
-  for ( size_t i = 0 ; i < NUMBER_ESTUDENTS ; i ++ ) print_student( list_estudents + i );
+  for ( size_t i = 0 ; i < NUMBER_ESTUDENTS ; i ++ ) print_student( list_students + i );
 
   int option;
   char *data;
@@ -37,27 +37,27 @@ int main ( void ) {
     
     if ( option == 1 ) {
       data = get_code();
-      for ( size_t i = 0 ; i < NUMBER_ESTUDENTS ; i ++ ) if ( are_the_same( data , strlen(data) , list_estudents[i].code , NAME_SIZE ) ) print_student( list_estudents + i );
+      for ( size_t i = 0 ; i < NUMBER_ESTUDENTS ; i ++ ) if ( are_the_same( data , strlen(data) , list_students[i].code , NAME_SIZE ) ) print_student( list_students + i );
       continue;
     } else if ( option == 2 ) { 
       data = get_name();
-      for ( size_t i = 0 ; i < NUMBER_ESTUDENTS ; i ++ ) if ( are_the_same( data , strlen(data) , list_estudents[i].name , NAME_SIZE ) ) print_student( list_estudents + i );
+      for ( size_t i = 0 ; i < NUMBER_ESTUDENTS ; i ++ ) if ( are_the_same( data , strlen(data) , list_students[i].name , NAME_SIZE ) ) print_student( list_students + i );
     } else if ( option == 3 ) { 
       data = get_last_name();
-      for ( size_t i = 0 ; i < NUMBER_ESTUDENTS ; i ++ ) if ( are_the_same( data , strlen(data) , list_estudents[i].last_name , NAME_SIZE ) ) print_student( list_estudents + i ); 
+      for ( size_t i = 0 ; i < NUMBER_ESTUDENTS ; i ++ ) if ( are_the_same( data , strlen(data) , list_students[i].last_name , NAME_SIZE ) ) print_student( list_students + i ); 
     } else if ( option == 4 ) { 
       data = get_carrer();
-      for ( size_t i = 0 ; i < NUMBER_ESTUDENTS ; i ++ ) if ( are_the_same( data , strlen(data) , list_estudents[i].carrer , NAME_SIZE ) ) print_student( list_estudents + i ); 
+      for ( size_t i = 0 ; i < NUMBER_ESTUDENTS ; i ++ ) if ( are_the_same( data , strlen(data) , list_students[i].carrer , NAME_SIZE ) ) print_student( list_students + i ); 
     } else if ( option == 5 ) { 
       data = get_faculty();
       for ( size_t i = 0 ; i < NUMBER_ESTUDENTS ; i ++ )
-        if ( are_the_same( data , strlen(data) , list_estudents[i].faculty , NAME_SIZE ) ) print_student( list_estudents + i ); 
+        if ( are_the_same( data , strlen(data) , list_students[i].faculty , NAME_SIZE ) ) print_student( list_students + i ); 
     } else if ( option == 6 ) {
       int sem = get_semester();
       for ( size_t i = 0 ; i < NUMBER_ESTUDENTS ; i ++ )
-        if ( list_estudents[ i ].sem == sem ) print_student( list_estudents + i );
+        if ( list_students[ i ].sem == sem ) print_student( list_students + i );
     } else if ( option == 7 ) {
-      for ( size_t i = 0 ; i < NUMBER_ESTUDENTS ; i ++ ) print_student( list_estudents + i );
+      for ( size_t i = 0 ; i < NUMBER_ESTUDENTS ; i ++ ) print_student( list_students + i );
       continue;
     }
 
@@ -66,6 +66,8 @@ int main ( void ) {
 
   printf("\n");
   
+  for ( size_t i = 0 ; i < NUMBER_ESTUDENTS ; i ++ ) free_student( list_students + i );
+
   return 0;
 }
 

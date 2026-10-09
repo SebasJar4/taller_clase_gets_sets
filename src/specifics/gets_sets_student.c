@@ -6,40 +6,54 @@
 #include<regex.h>
 #include<string.h>
 
-bool validate_data ( char * exp , char * str ) {
-  regex_t regex;
-  int res = regcomp( &regex, exp , REG_EXTENDED );
+//===========================
+//    Validate con regex
+//===========================
 
-  if (res != 0) {
-    fprintf( stderr , "Error al compilar la regex.\n" );
+static bool validate_data ( char * exp , char * str ) {
+  // Creamos regex obj
+  regex_t regex;
+  int res = regcomp( &regex, exp , REG_EXTENDED ); // Creamos compilador regex
+
+  // Revisamos si se compilo bien el compilador regex 
+  if ( res != 0 ) {
+    fprintf( stderr , "Error al compilar la regex error res: '%d'.\n" , res );
     exit( 1 );
   }
+  // revisamos si regex cumple la condicion de exp...
+  bool rta = ( regexec( &regex , str , 0 , NULL , 0 ) == 0 );
+  regfree( &regex ); // liberamos el regex ya que hace un malloc interno...
 
-  return regexec( &regex , str , 0 , NULL , 0 ) == 0;
+  return rta;
 }
 
-bool validate_code_data ( char * str ) {
-  return validate_data( "^[a-zA-Z0-9_\\-\\+!@#\\$.,]+$" , str );
+static bool validate_code_data ( char * str ) {
+  return validate_data( "^[a-zA-Z0-9_+!@#$.,-]+$" , str );
 }
 
-bool validate_carrer_or_faculty ( char * str ) {
+static bool validate_carrer_or_faculty ( char * str ) {
   return validate_data( "^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ]+)*$" , str );
 }
 
-bool validate_alphabeth ( char * str ) {
+static bool validate_alphabeth ( char * str ) {
   return validate_data( "^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+$" , str );
 }
+
+//===========================
+//          Gets
+//===========================
 
 char * get_code() {
   
   char * tmp;
-  char * str = malloc( CODE_SIZE );
+  char * str = calloc( (CODE_SIZE + 1) , sizeof( char ) );
+  
   while ( true ) {
 
-    printf("@Ingrese el codigo del estudiante (tiene que tener maximo %d caracteres puede poner letras, numeros o \"_-+!@#$.,\") > " ,  CODE_SIZE );
+    printf("@Ingrese el codigo del estudiante (tiene que tener maximo %d caracteres puede poner letras, numeros o \"_+!@#$.,-\") > " ,  CODE_SIZE );
     tmp = get_str_stdin();
 
-    if ( validate_code_data( tmp ) && strlen(tmp) <= CODE_SIZE ) break;
+    if ( validate_code_data( tmp ) && strlen( tmp ) <= CODE_SIZE ) {break;}
     
     print_input_exception("La entrada '%s', solo puede contener letras, numeros o '_-+!@#$.,' y maximo %lu caracteres" , tmp , CODE_SIZE );
     free( tmp );
@@ -60,7 +74,7 @@ char * get_code() {
 
 char * get_name() {
   char * tmp;
-  char * str = malloc( NAME_SIZE );
+  char * str = calloc( (NAME_SIZE + 1) , sizeof( char ) );
   while ( true ) {
 
     printf("@Ingrese el nombre del estudiante (tiene que tener maximo %d caracteres puede poner letras solamente) > " ,  NAME_SIZE );
@@ -85,9 +99,9 @@ char * get_name() {
   return str;
 }
 
-char * get_last_name( ) {
+char * get_last_name() {
   char * tmp;
-  char * str = malloc( LAST_NAME_SIZE );
+  char * str = calloc( LAST_NAME_SIZE + 1 , sizeof( char ) );
   while ( true ) {
 
     printf("@Ingrese el apellido del estudiante (tiene que tener maximo %d caracteres puede poner letras solamente) > " ,  LAST_NAME_SIZE );
@@ -112,21 +126,21 @@ char * get_last_name( ) {
   return str;
 }
 
-int get_semester( ) {
+int get_semester() {
   int input; 
   while ( true ) {
     input = get_input_int("el semestre del estudiante");
-    if ( input > 0 ) break;
+    if ( input > 0 && input <= 30 ) break;
     limpieza_stdin();
-    print_input_exception( "La entrada %d no puede ser <= 0..." , input );
+    print_input_exception( "La entrada %d no puede ser <= 0 ni mayor a 30" , input );
   }
 
   return input;
 }
 
-char * get_carrer( ) {
+char * get_carrer() {
   char * tmp;
-  char * str = malloc( CARRER_SIZE );
+  char * str = calloc( (CARRER_SIZE + 1) , sizeof( char ) );
   
   while ( true ) {
 
@@ -152,9 +166,9 @@ char * get_carrer( ) {
   return str;
 }
 
-char * get_faculty( ) {
+char * get_faculty() {
   char * tmp;
-  char * str = malloc( FACULTY_SIZE );
+  char * str = malloc( FACULTY_SIZE + 1 );
   
   while ( true ) {
 
@@ -191,6 +205,10 @@ Student get_student() {
   return student;
 }
 
+//===========================
+//           Sets
+//===========================
+
 char * set_code ( Student * student ) {
   assert( student != NULL );
   return ( student->code = get_code() );
@@ -221,7 +239,6 @@ char * set_faculty ( Student * student ) {
   return (student->faculty = get_faculty() );
 }
 
-
 Student * set_all_of_student_without_code ( Student * student ) {
   student->name = get_name();
   student->last_name = get_last_name();
@@ -236,6 +253,11 @@ Student * set_all_of_student ( Student * student ) {
   set_all_of_student_without_code( student );
   return student;
 }
+
+
+//===========================
+//          Print
+//===========================
 
 void print_student ( Student * student ) {
   assert( student->code != NULL
@@ -254,4 +276,12 @@ void print_student ( Student * student ) {
     , student->faculty 
     , student->sem 
   );
+}
+
+void free_student ( Student * student ) {
+  if ( student->code != NULL ) free( student->code );
+  if ( student->name != NULL ) free( student->name );
+  if ( student->last_name != NULL ) free( student->last_name );
+  if ( student->carrer != NULL ) free( student->carrer );
+  if ( student->faculty != NULL ) free( student->faculty );
 }

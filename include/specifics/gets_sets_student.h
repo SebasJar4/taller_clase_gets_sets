@@ -26,4 +26,6 @@
 
   void print_student( Student * student );
 
+  void free_student ( Student * student );
+
 #endif

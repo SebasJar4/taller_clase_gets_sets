@@ -15,7 +15,7 @@ bool valid_characters_for_ignorin_initial_spaces ( int c ) {
 char * get_str_stdin () {
   // creamos un array que crecera dinamicamente
   size_t capacity = 30;
-  char *str = malloc( capacity ); // recervamos memoria en el heap
+  char *str = calloc( capacity , sizeof( char ) ); // recervamos memoria en el heap
   
   if ( str == NULL ) { // si no se pudo error...
     fprintf( stderr , "!Error: el programa no logro recervar el malloc... ");
@@ -28,14 +28,14 @@ char * get_str_stdin () {
   while (true) {
     int current = getc(stdin); // Usamos int para detectar EOF correctamente
 
-    if (current == EOF || current == '\n') {
+    if ( current == EOF || current == '\n') {
       break; // Salimos al presionar Enter o si ocurre un fin de archivo
     }
 
     if ( (index + 1) >= capacity ) { // si excede la capadidad incrementamos mas el array
       capacity *= 1.5;
    
-      char *tmp = realloc( str , capacity ); // pedimos el incremento
+      char *tmp = realloc( str , capacity * sizeof( char ) ); // pedimos el incremento
       if ( tmp == NULL ) { // si no error
         fprintf( stderr , "!!Error, el programa no pudo incrementar el tama;o del array" );
         free( str );
