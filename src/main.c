@@ -17,6 +17,7 @@ int main ( void ) {
   Student list_students[ NUMBER_ESTUDENTS ]; // heap stack
   for ( size_t i = 0 ; i < NUMBER_ESTUDENTS ; i ++ ) {
     printf( "\n@@@ Vamos a ingresar los datos del estudiante %lu de %u" , (i + 1) , NUMBER_ESTUDENTS );
+    if ( i ) limpieza_stdin();
     press_enter_to_continue();
   
     list_students[i].code = get_unique_code( list_students , i );
@@ -30,15 +31,12 @@ int main ( void ) {
   char *data;
   
   while ( true ) {
-
-    if ( get_yes_or_not("\n Salir?") ) break; 
     
     option = get_option();
     
     if ( option == 1 ) {
       data = get_code();
       for ( size_t i = 0 ; i < NUMBER_ESTUDENTS ; i ++ ) if ( are_the_same( data , strlen(data) , list_students[i].code , NAME_SIZE ) ) print_student( list_students + i );
-      continue;
     } else if ( option == 2 ) { 
       data = get_name();
       for ( size_t i = 0 ; i < NUMBER_ESTUDENTS ; i ++ ) if ( are_the_same( data , strlen(data) , list_students[i].name , NAME_SIZE ) ) print_student( list_students + i );
@@ -56,9 +54,13 @@ int main ( void ) {
       int sem = get_semester();
       for ( size_t i = 0 ; i < NUMBER_ESTUDENTS ; i ++ )
         if ( list_students[ i ].sem == sem ) print_student( list_students + i );
+      continue;
     } else if ( option == 7 ) {
       for ( size_t i = 0 ; i < NUMBER_ESTUDENTS ; i ++ ) print_student( list_students + i );
       continue;
+    } else if ( option == 0 ) {
+      printf("\n\n Adios!! \n");
+      break;
     }
 
     free( data );
@@ -74,11 +76,11 @@ int main ( void ) {
 int get_option() { 
   int input;
   while ( true ) {
-    printf("Seleccione una opcion: \n 1. Ver estudiante por codigo \n 2. Ver a estudiante por nombre\n 3. Ver estudiante por Apellido\n 4. Ver estudiante por Carrera\n 5. Ver estudiante por Facultad\n 6. Ver estudiante por semestre\n 7. Ver todos los estudiante\n" );
+    printf("Seleccione una opcion: \n 1. Ver estudiante por codigo \n 2. Ver a estudiante por nombre\n 3. Ver estudiante por Apellido\n 4. Ver estudiante por Carrera\n 5. Ver estudiante por Facultad\n 6. Ver estudiante por semestre\n 7. Ver todos los estudiante\n ==> 0. Salir....\n" );
 
     input = get_input_int("la opcion");
 
-    if ( input >= 1 && input <= 7 ) break;
+    if ( input >= 0 && input <= 7 ) break;
     print_input_exception("La entrada es invalida....");
   }
   return input;

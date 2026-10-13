@@ -50,10 +50,10 @@ int get_input_int ( char * complete_str_message ) {
     // input
     printf( "@Ingrese %s > " , complete_str_message );
     int out_scan = scanf( "%d" , &input );
-    limpieza_stdin();
+    // limpieza_stdin();
     if ( out_scan == 1 ) { break; } // entrada correcta
     // Mensaje de error
-    print_input_exception("!!Error, el valor de entrada es invalido");
+    print_input_exception("El valor de entrada es invalido");
   }
 
   return input;
@@ -70,7 +70,7 @@ double get_input_double ( char * complete_str_message ) {
     limpieza_stdin();
     if ( out_scan == 1 ) { break; } // entrada correcta
     // Mensaje de error
-    print_input_exception("!!Error, el valor de entrada es invalido");
+    print_input_exception("El valor de entrada es invalido");
   }
 
   return input;
@@ -87,7 +87,7 @@ bool get_yes_or_not( char *complete_str_message ) {
   while ( 1 ) {
     input = get_input_int( mss );
     if ( input >= 0 && input <= 1 ) { break; }
-    print_input_exception("el numero debe ser 1 o 0!!");
+    print_input_exception("El numero debe ser 1 o 0!!");
   }
 
   return input;
